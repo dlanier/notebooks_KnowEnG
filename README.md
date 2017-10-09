@@ -33,8 +33,20 @@ There are four jupyter notebooks that one can choose from:
  apt-get install -y libblas-dev liblapack-dev libatlas-base-dev gfortran
 ```
 
-### 3. In Jupyter: change directory to notebooks
+### 3. Install jupyter notebook. http://jupyter.readthedocs.io/en/latest/install.html
 
 ```
- etc. etc. etc.
+pip3 install --upgrade pip
+
+pip3 install jupyter
 ```
+
+### 4. Start Jupyter: change directory to notebooks
+
+```
+jupyter notebook
+
+cd 
+```
+
+
