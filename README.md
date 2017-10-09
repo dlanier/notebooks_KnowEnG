@@ -33,7 +33,7 @@ There are four jupyter notebooks that one can choose from:
  apt-get install -y libblas-dev liblapack-dev libatlas-base-dev gfortran
 ```
 
-### 3. Install jupyter notebook. http://jupyter.readthedocs.io/en/latest/install.html
+### 3. Install jupyter notebook. ( http://jupyter.readthedocs.io/en/latest/install.html )
 
 ```
 pip3 install --upgrade pip
@@ -51,6 +51,6 @@ jupyter notebook
 
 ### 5 b. When the jupyter server opens your browser, open **env_setup_notebook.ipynb** in **notebooks_KnowEnG/test**
 
-### 6  Run the **first cell** to unzip the data and copy editable notebooks to the test directory.
+### 6.  Run the **first cell** to unzip the data and copy editable notebooks to the test directory.
 
-### 7 Open and run your choice of notebooks.
+### 7. Open and run your choice of notebooks.
