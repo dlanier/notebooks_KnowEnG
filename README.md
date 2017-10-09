@@ -47,8 +47,6 @@ pip3 install jupyter
 jupyter notebook
 ```
 
-### 5. Start your notebook
+### 5 a. If the command line response offers a token then cut and paste it into your browser window.
+### 5 b. When the jupyter server opens your browser, navigate to the **env_setup_notebook.ipynb** in **notebooks_KnowEnG/test**
 
-```
-
-```
