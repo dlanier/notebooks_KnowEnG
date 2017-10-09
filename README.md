@@ -15,7 +15,7 @@ There are four jupyter notebooks that one can choose from:
 * * * 
 ### 1. Clone the Samples_Clustering_Pipeline Repo
 ```
- git clone https://github.com/dlanier/dev_tools_KnowEnG.git
+ git clone https://github.com/dlanier/notebooks_KnowEnG.git
 ```
  
 ### 2. Install the following (Ubuntu or Linux)
@@ -41,12 +41,14 @@ pip3 install --upgrade pip
 pip3 install jupyter
 ```
 
-### 4. Start Jupyter: change directory to notebooks
+### 4. Start Jupyter
 
 ```
 jupyter notebook
-
-cd 
 ```
 
+### 5. Start your notebook
 
+```
+
+```
