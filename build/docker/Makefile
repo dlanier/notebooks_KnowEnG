@@ -9,4 +9,4 @@ login_to_dockerhub:
 	docker login --username=$(username) --email=$(email)
 
 push_to_dockerhub:
-	docker push knowengdev/notebooks_knoweng
+	docker push knowengdev/notebooks_knoweng:$(CURR_DATE)
