@@ -1,13 +1,16 @@
-FROM knowengdev/notebooks_knoweng:base_hub_11_10_2017
+FROM knowengdev/base_image:09_19_2017
 MAINTAINER Dan Lanier <lanier4@illinois.edu>
 # build current image for notebooks.knoweng.org
 
-ENV NB_SRC_LOC /home/notebooks_KnowEnG
-RUN git clone https://github.com/dlanier/notebooks_KnowEnG.git ${NB_SRC_LOC} 
-
-# Set up working directory
 ENV SRC_LOC /home
+
+RUN pip3 install -I knpackage dispy
+RUN pip3 install --upgrade pip
+RUN pip3 install jupyter
+
+RUN git clone https://github.com/dlanier/notebooks_KnowEnG.git ${SRC_LOC}
+
 WORKDIR ${SRC_LOC}
 
-
-# docker run -v `pwd`:/home/admin_tank/beam_me_out_scotty -p 8000:8000 -it knowengdev/notebooks_knoweng:11_10_2017 jupyterhub --ip=0.0.0.0 --port=8000
+# run locally:
+# docker run -v `pwd`:/home/test/run_dir -it -p 8888:8888 knowengdev/notebooks_knoweng:10_12_2017 jupyter notebook --ip 0.0.0.0 --no-browser --allow-root
