@@ -1,0 +1,49 @@
+FROM knowengdev/base_image:09_19_2017
+MAINTAINER Dan Lanier <lanier4@illinois.edu>
+# build base image for notebooks.knoweng.org
+
+RUN apt-get install -y python-PIL
+
+RUN pip3 install --upgrade pip
+RUN pip3 install jupyter
+RUN pip3 install ipywidgets
+
+RUN jupyter nbextension enable --py --sys-prefix widgetsnbextension
+
+RUN pip3 install jupyterhub
+RUN apt-get update && apt-get install -y npm nodejs-legacy
+RUN npm install -g configurable-http-proxy
+
+RUN pip3 install jupyter_contrib-nbextensions
+RUN jupyter contrib nbextension install --user
+
+# Install the latest knpackage
+RUN pip3 install -I knpackage dispy 
+
+# New additions
+RUN pip3 install --upgrade Pillow
+
+RUN pip3 install --upgrade matplotlib
+RUN pip3 install --upgrade lifelines
+
+RUN pip3 install --upgrade elasticsearch
+
+# Set up working directory
+ENV SRC_LOC /home
+WORKDIR ${SRC_LOC}
+
+# jupyterhub -- requires users setup and login -- setup:
+# local_mac:~$ docker run -it knowengdev/notebooks_knoweng:base_hub
+# (inside the container) create one user:
+# root@f0e99796011b:/home# adduser jovian
+# follow the prompts to complte user setup
+# IN ANOTHER TERMINAL - get the name of the running container:
+# local_mac:~$ docker ps
+# use that name to save the container with user jovian and a new tag:
+# local_mac:~$ docker container commit -m "added user jovian" container_name knowengdev/notebooks_knoweng:base_hub_mm_dd_yyyy
+# after the image is save you may exit the other container:
+# root@f0e99796011b:/home# exit
+
+# then when you run the container you will be able to log into jupyterhub as jovian
+# local_mac:~$ docker run -v `pwd`:/home/admin_tank/beam_me_out_scotty -p 8000:8000 -it knowengdev/notebooks_knoweng:base_hub_mm_dd_yyyy jupyterhub --ip=0.0.0.0 --port=8000
+# 
