@@ -1,2 +1,0 @@
-Guard against github rules syncing empty directories, and various server policy implementations.
-
