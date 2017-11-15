@@ -1,5 +1,5 @@
 import os
-
+import numpy as np
 import pandas as pd
 from pandas.io.common import EmptyDataError
 
@@ -244,3 +244,28 @@ def get_two_files_execute_button(input_data_dir, results_dir, file_select_dict, 
 
     return two_files_execute_button
 
+def get_controls_dict_for_run_parameters_df(run_parameters_df, user_data_dir):
+
+    controls_dict = {}
+    for key_name in run_parameters_df.index.values:
+        if 'directory' in key_name:
+            pass
+        elif 'full_path' in key_name:
+            controls_dict[key_name] = get_select_view_file_button_set(user_data_dir)
+        else:
+            row_values = np.unique(run_parameters_df.loc[key_name].values)
+            if isinstance(row_values[0], float):
+                pass
+            elif isinstance(row_values[0], int):
+                pass
+            elif isinstance(row_values[0], str):
+                controls_dict[key_name] = widgets.Dropdown(options=row_values,
+                                                           value=row_values[0],
+                                                           description=key_name)
+    return controls_dict
+
+def display_file_selectors(controls_dict):
+
+    for k, v in controls_dict.items():
+        if 'full_path' in k:
+            show_select_view_button(v)
