@@ -136,3 +136,23 @@ def get_yaml_df(yaml_dir, UNUSED_FILL='not used'):
             yaml_file_df[f_name].loc[k] = v
 
     return yaml_file_df
+
+def get_key_value_df(par_df, key_name, key_value, null_string='not used'):
+    """ get the dataframe where row 'key_name' values match 'key_value' """
+    col_dict = (par_df.loc[key_name] == key_value).to_dict()
+    col_list = []
+    for k, v in col_dict.items():
+        if v == True:
+            col_list.append(k)
+
+    if len(col_list) > 0:
+        par_df = par_df[col_list]
+
+    rows_used_list = []
+    for row_name in par_df.index:
+        if (par_df.loc[row_name].values == null_string).any() == False:
+            rows_used_list.append(row_name)
+    if len(rows_used_list) > 0:
+        par_df = pd.DataFrame(par_df.loc[rows_used_list])
+
+    return par_df
