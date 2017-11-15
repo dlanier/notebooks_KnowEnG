@@ -156,3 +156,13 @@ def get_key_value_df(par_df, key_name, key_value, null_string='not used'):
         par_df = pd.DataFrame(par_df.loc[rows_used_list])
 
     return par_df
+
+def get_methods_df_dict(yaml_dir):
+    """ methods_df_dict = get_methods_df_dict(yaml_dir) """
+    key_dict, methods_list, yaml_files_list = get_parameter_keys_dict(yaml_dir)
+    run_parameters_df = get_yaml_df(yaml_dir)
+    methods_df_dict = {}
+    for method_name in methods_list:
+        methods_df_dict[method_name + '_df'] = get_key_value_df(run_parameters_df, 'method', method_name)
+
+    return methods_df_dict
