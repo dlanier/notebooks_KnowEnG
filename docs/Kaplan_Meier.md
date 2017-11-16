@@ -11,31 +11,31 @@ The input to the plot is:
 |:------------------------------ |:------------------------------------- |:-------------------- |
 | Phenotype category id         | indicator of survival                 | time of survival|
 
-# Using the notebook.
+# Using the KnowEnG Kaplan_Meier.ipynb notebook.
  ---
 
-### If your browser allows you will see this screen:
+### If your browser allows you will see this screen.
 <p align="center">
   <img  src="../data/images/up_and_running.png" height=220>
 </p>
 
-### OR, if the code is showing, use the _Cell_ menu to _Run All_:
+### If not, and the code is showing, use the _Cell_ menu to _Run All_
 
 <p align="center">
   <img  src="../data/images/select_run_all.png" height=220>
 </p>
 
-### You may view the selected phenotype file to get the column names:
+### Click on the **View** button to see the top of the phenotype file.
 <p align="center">
   <img  src="../data/images/Kaplan_Meier_View_pheno.png" height=220>
 </p>
 
-### Use listboxes to select the column names, then click on the **Show** to view the plot:
+### Use listboxes to select columns for: ClusterID, Event and Time; click the **Show** button.
 <p align="center">
   <img  src="../data/images/Kaplan_Meier_graph.png" height=220>
 </p>
 
-### Use the _Kernel_ menu _Restart and Clear Output_ to clear selection error messages or all output.
+### Use the _Kernel_ menu _Restart and Clear Output_ to clear selection error messages (and all output).
 
 <p align="center">
   <img  src="../data/images/select_restart.png" height=220>
