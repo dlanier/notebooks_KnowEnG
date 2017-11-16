@@ -35,7 +35,7 @@ The input to the plot is:
   <img  src="../data/images/Kaplan_Meier_graph.png" height=220>
 </p>
 
-### Use the _Kernel_ menu _Restart and Clear Output_ to clear selection error messages (and all output).
+### Use the _Kernel_ menu _Restart and Clear Output_ to clear error messages (and all output).
 
 <p align="center">
   <img  src="../data/images/select_restart.png" height=220>
