@@ -14,7 +14,7 @@ The input to the plot is:
 # Using the KnowEnG Kaplan_Meier.ipynb notebook.
  ---
 
-### If your browser allows you will see this screen.
+### If your browser allows auto-initialization you will see this screen.
 <p align="center">
   <img  src="../data/images/up_and_running.png" height=220>
 </p>
