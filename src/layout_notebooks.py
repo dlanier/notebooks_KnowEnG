@@ -86,6 +86,11 @@ def show_select_view(list_box, view_button):
     display(widgets.Box([list_box, view_button], layout=box_layout))
 
 
+def show_select_refresh_view_button(button):
+    """ formatted display of file selector button """
+    display(widgets.Box([button.file_selector, button.refresh_files_button, button], layout=box_layout))
+    display(button.view_box)
+
 def user_data_list(target_dir, FEXT):
     """ user_file_list = update_user_data_list(user_data_dir, FEXT)
     Args:
@@ -145,6 +150,14 @@ def get_view_box():
         description="")
     return vb
 
+def visualize_changed_file(change):
+    select_file_listbox = change['owner']
+    if select_file_listbox.view_box.value == '':
+        return
+    file_name = os.path.join(select_file_listbox.data_directory, select_file_listbox.value)
+
+    df = pd.read_csv(file_name, sep='\t', header=0, index_col=0)
+    select_file_listbox.view_box.value = df.to_html()
 
 def visualize_selected_file(button):
     """ view button and output display callback
@@ -208,6 +221,31 @@ def get_select_view_file_button_set(data_directory, button_name='View'):
     select_file_button.file_selector = get_dropdown_files_listbox(data_directory)
     select_file_button.file_selector.data_directory = data_directory
     select_file_button.on_click(visualize_selected_file)
+
+    return  select_file_button
+
+def refresh_files_list(button):
+    """ refresh files list """
+    current_value = button.file_selector.value
+    button.file_selector.options = user_data_list(button.file_selector.data_directory,
+                                                  button.file_selector.file_types_list)
+    if current_value in button.file_selector.options:
+        button.file_selector.value = current_value
+
+def get_select_refresh_view_file_button(data_directory, button_name='View', file_types_list=USER_DATAFILE_EXTENSIONS_LIST):
+    select_file_button = get_select_view_file_button_set(data_directory, button_name)
+    select_file_button.file_selector.file_types_list = file_types_list
+    select_file_button.file_selector.view_box = select_file_button.view_box
+    select_file_button.file_selector.observe(visualize_changed_file, names='value')
+
+    refresh_files_button = widgets.Button(description='Refresh',
+                                          disabled=False,
+                                          button_style='',
+                                          tooltip='refresh files list')
+
+    refresh_files_button.file_selector = select_file_button.file_selector
+    refresh_files_button.on_click(refresh_files_list)
+    select_file_button.refresh_files_button = refresh_files_button
 
     return  select_file_button
 
