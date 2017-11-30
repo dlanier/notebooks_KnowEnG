@@ -9,6 +9,10 @@ import ipywidgets as widgets
 
 import knpackage.toolbox as kn
 
+sys.path.insert(1, './')
+from layout_notebooks import *
+
+
 lisbox_layout = widgets.Layout(width='50%')
 
 box_layout = widgets.Layout(display='inline-flex',
@@ -214,8 +218,11 @@ def execute_yaml_file(button):
     os.system(call_python_string)
         
 def show_Signatute_Analysis_Execute_button():
-    """ construct and show the signature analysis pipeline select and run widgets """
-    select_file_button = get_select_view_file_button_set(run_directory, button_name='View', file_types_list=['.yml'])
+    """ construct and show the signature analysis pipeline select and run widgets
+     get_select_refresh_view_file_button
+    """
+    select_file_button = get_select_refresh_view_file_button(run_directory, button_name='View', file_types_list=['.yml'])
+    # select_file_button = get_select_view_file_button_set(run_directory, button_name='View', file_types_list=['.yml'])
     show_select_view_button(select_file_button)
     exbutton = get_single_file_execute_button(run_directory, 
                                               results_dir, 
