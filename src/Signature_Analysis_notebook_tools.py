@@ -12,6 +12,7 @@ import knpackage.toolbox as kn
 sys.path.insert(1, './')
 from layout_notebooks import *
 
+SIG_A_TYPES_LIST = ['.yml']
 
 lisbox_layout = widgets.Layout(width='50%')
 
@@ -130,7 +131,7 @@ def refresh_files_list(button):
     if current_value in button.file_selector.options:
         button.file_selector.value = current_value
     
-def get_select_view_file_button_set(data_directory, button_name='View', file_types_list=['.tsv','.txt','.df','.gz']):
+def get_select_view_file_button_set(data_directory, button_name='View', file_types_list=SIG_A_TYPES_LIST):
     """ get a view button with file select listbox and a file view box """
     refresh_files_button = widgets.Button(description='Refresh',
                                            disabled=False,
