@@ -6,8 +6,8 @@ import sys
 
 from knpackage import toolbox as kn
 
-# sys.path.insert(1, '../notebooks_KnowEnG/src')
-sys.path.insert(1, './')
+sys.path.insert(1, '../../notebooks_KnowEnG/src')
+# sys.path.insert(1, './')
 from layout_notebooks import *
 
 sys.path.insert(1, '../Spreadsheets_Transformation/src')
