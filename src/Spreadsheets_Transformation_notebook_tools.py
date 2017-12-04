@@ -7,7 +7,7 @@ import sys
 from knpackage import toolbox as kn
 
 sys.path.insert(1, '../../notebooks_KnowEnG/src')
-# sys.path.insert(1, './')
+
 from layout_notebooks import *
 
 sys.path.insert(1, '../Spreadsheets_Transformation/src')
@@ -63,7 +63,13 @@ def transpose_selected_file(button):
 
 def show_transpose_controls():
     show_cell_title('Transpose')
-    get_transpose_file_button = get_select_refresh_view_file_button(USER_DATA_DIRECTORY)
+    # def get_select_view_file_button_set(data_directory,
+    #                                 button_name=VIEW_FILE_STRING,
+    #                                 file_types_list=USER_DATAFILE_EXTENSIONS_LIST):
+    # """ get a view button with file select listbox and a file view box """
+    get_transpose_file_button = get_select_view_file_button_set(data_directory=USER_DATA_DIRECTORY,
+                                                                button_name=VIEW_FILE_STRING,
+                                                                file_types_list=USER_DATAFILE_EXTENSIONS_LIST)
     if os.path.isfile(os.path.join(USER_DATA_DIRECTORY, DEFAULT_INPUT_FILES['transpose'])):
         get_transpose_file_button.file_selector.value \
             = DEFAULT_INPUT_FILES['transpose']
@@ -76,81 +82,7 @@ def show_transpose_controls():
     )
     transpose_execute_button.on_click(transpose_selected_file)
 
-    show_select_refresh_view_button(get_transpose_file_button)
+    show_select_view_button(get_transpose_file_button)
+
     show_execute_button(transpose_execute_button)
-
-
-def get_common_samples(button):
-    """ callback for common_samples_execute_button
-
-    Args:
-        button:         an ipywidgets.Button object with 2 ipywidgets.Dropdown (.file_selector) objects containing
-                        the selected file names in the .value fields.
-
-    """
-    if button.description == 'Clear':
-        visualize_selected_file(button)
-        return
-
-    input_data_directory = button.input_data_directory
-    spreadsheet_1_file_name = os.path.join(input_data_directory, button.file_1_selector.value)
-    spreadsheet_2_file_name = os.path.join(input_data_directory, button.file_2_selector.value)
-    transform_name = "common_samples"
-
-    spreadsheet_1_df = kn.get_spreadsheet_df(spreadsheet_1_file_name)
-    spreadsheet_2_df = kn.get_spreadsheet_df(spreadsheet_2_file_name)
-
-    spreadsheet_1_df, spreadsheet_2_df = stt.common_samples_df(spreadsheet_1_df, spreadsheet_2_df)
-
-    results_directory = button.results_directory
-    result_1_file_name = stt.get_outfile_name(
-        results_directory,
-        spreadsheet_1_file_name,
-        transform_name,
-        timestamp=False,
-    )
-    spreadsheet_1_df.to_csv(result_1_file_name, sep='\t', float_format='%g')
-
-    result_2_file_name = stt.get_outfile_name(
-        results_directory,
-        spreadsheet_2_file_name,
-        transform_name,
-        timestamp=False,
-    )
-    spreadsheet_2_df.to_csv(result_2_file_name, sep='\t', float_format='%g')
-
-    button.fname_list = [spreadsheet_1_file_name, spreadsheet_2_file_name]
-    visualize_selected_file(button)
-
-
-
-def show_intersect_controls():
-    show_cell_title('Intersect')
-
-    # if True: return
-
-    # get spreadsheet 1 control widgets
-    common_samples_flistbx_1_view_button    = get_select_view_file_button_set(USER_DATA_DIRECTORY)
-    if os.path.isfile(os.path.join(USER_DATA_DIRECTORY, DEFAULT_INPUT_FILES['common_samples_1'])):
-        common_samples_flistbx_1_view_button.file_selector.value = DEFAULT_INPUT_FILES['common_samples_1']
-
-    # get spreadsheet 2 control widgets
-    common_samples_flistbx_2_view_button    = get_select_view_file_button_set(USER_DATA_DIRECTORY)
-    if os.path.isfile(os.path.join(USER_DATA_DIRECTORY, DEFAULT_INPUT_FILES['common_samples_2'])):
-        common_samples_flistbx_2_view_button.file_selector.value = DEFAULT_INPUT_FILES['common_samples_2']
-
-    # get the execute button
-    file_select_dict = {    'file_1_selector': common_samples_flistbx_1_view_button.file_selector,
-                            'file_2_selector': common_samples_flistbx_2_view_button.file_selector }
-    common_samples_execute_button           = get_two_files_execute_button(
-                                                USER_DATA_DIRECTORY,
-                                                USER_RESULTS_DIRECTORY,
-                                                file_select_dict=file_select_dict,
-                                                button_name='Intersect')
-    common_samples_execute_button.on_click(get_common_samples)
-
-    # show the controls
-    show_select_view_button(common_samples_flistbx_1_view_button)
-    show_select_view_button(common_samples_flistbx_2_view_button)
-    show_execute_button(common_samples_execute_button)
 

@@ -28,6 +28,8 @@ if len(USER_BASE_DIRECTORIES_LIST) < 1 or not USER_RESULTS_DIRECTORY in USER_BAS
 #                                                                                       file select constants
 USER_DATAFILE_EXTENSIONS_LIST = ['.tsv', '.txt', '.df', '.gz']
 LIST_BOX_UPDATE_MESSAGE = 'View == Update List'
+BUTTON_CLEAR_STRING = 'Clear'
+VIEW_FILE_STRING = 'View'
 
 
 #                                                                                       layout styles
@@ -93,24 +95,32 @@ def show_select_view(list_box, view_button):
     display(widgets.Box([list_box, view_button], layout=box_layout))
 
 
-def user_data_list(data_directory, file_types_list):
-    """ user_file_list = update_user_data_list(user_data_dir, FEXT)
+def user_data_list(data_directory, file_types_list, include_update=True):
+    """ user_file_list = update_user_data_list(user_data_dir, file_types_list)
     Args:
-        target_dir:     directory to list
-        FEXT:           File extension list e.g. ['.tsv', '.txt']
+        target_dir:         valid directory name
+        file_types_list:    list of file extensions - types e.g. ['.tsv', '.txt']
+
+    Returns:
+        types_file_list:    list of file names
     """
-    my_file_list = []
+    types_file_list = []
+    if os.path.isdir(data_directory) != True:
+        return types_file_list
+
     for f in os.listdir(data_directory):
         if os.path.isfile(os.path.join(data_directory, f)):
             noNeed, f_ext = os.path.splitext(f)
             if f_ext in file_types_list:
-                my_file_list.append(f)
+                types_file_list.append(f)
 
-    if len(my_file_list) <= 0:
-        my_file_list.append('No Data')
+    if len(types_file_list) <= 0:
+        types_file_list.append('No Data')
 
-    my_file_list.append(LIST_BOX_UPDATE_MESSAGE)
-    return my_file_list
+    if include_update == True:
+        types_file_list.append(LIST_BOX_UPDATE_MESSAGE)
+
+    return types_file_list
 
 
 def get_dropdown_files_listbox(data_directory=USER_DATA_DIRECTORY, file_types=USER_DATAFILE_EXTENSIONS_LIST):
@@ -124,7 +134,9 @@ def get_dropdown_files_listbox(data_directory=USER_DATA_DIRECTORY, file_types=US
         description='',
         layout=lisbox_layout,
     )
+    files_dropdown_stock_box.data_directory = data_directory
     files_dropdown_stock_box.file_types_list = file_types
+
     return files_dropdown_stock_box
 
 
@@ -146,15 +158,35 @@ def get_view_box():
         description="")
     return vb
 
+def clear_view_box(view_box):
+    """ clear values in widgets.HTML box """
+    view_box.value = ''
+    view_box.description = ''
+
 
 def visualize_changed_file(change):
-    select_file_listbox = change['owner']
-    if select_file_listbox.view_box.value == '':
-        return
-    file_name = os.path.join(select_file_listbox.data_directory, select_file_listbox.value)
+    """ show changed file selection
+    Args:
 
-    df = pd.read_csv(file_name, sep='\t', header=0, index_col=0)
-    select_file_listbox.view_box.value = df.to_html()
+    """
+    select_file_listbox = change['owner']
+    button = select_file_listbox.control_button
+
+    if select_file_listbox.value == LIST_BOX_UPDATE_MESSAGE or select_file_listbox.value == '':
+        clear_view_box(button.view_box)
+        button.description = button.original_description
+        refresh_files_list(button)
+        return
+
+    if button.description == BUTTON_CLEAR_STRING:
+        button.description = VIEW_FILE_STRING
+        if len(select_file_listbox.file_types_list) == 1 and '.yml' in select_file_listbox.file_types_list:
+            visualize_selected_yaml_file(button)
+        else:
+            visualize_selected_file(button)
+        button.description = BUTTON_CLEAR_STRING
+
+        return
 
 
 def visualize_selected_file(button):
@@ -165,23 +197,21 @@ def visualize_selected_file(button):
                     IPywidgets.Dropdown (.file_selector)
                     with selected file name in .value
     """
-    if button.file_selector.value == LIST_BOX_UPDATE_MESSAGE:
-        if button.description == 'Clear':
-            button.view_box.value = ''
-            button.view_box.description = ''
-            button.description = button.original_description
+    if hasattr(button, 'fname_list') == False and button.file_selector.value == LIST_BOX_UPDATE_MESSAGE:
+            if button.description == BUTTON_CLEAR_STRING:
+                clear_view_box(button.view_box)
+                button.description = button.original_description
 
-        refresh_files_list(button)
-        return
+            refresh_files_list(button)
+            return
 
-    if button.description == 'Clear':
-        button.view_box.value = ''
-        button.view_box.description = ''
+    if button.description == BUTTON_CLEAR_STRING:
+        clear_view_box(button.view_box)
         button.description = button.original_description
         return
     else:
         button.original_description = button.description
-        button.description = 'Clear'
+        button.description = BUTTON_CLEAR_STRING
 
     try:
         if hasattr(button, 'fname_list') == True:
@@ -220,21 +250,20 @@ def visualize_selected_file(button):
 def visualize_selected_yaml_file(button):
     """ callback for yaml file view / clear button """
     if button.file_selector.value == LIST_BOX_UPDATE_MESSAGE:
-        if button.description == 'Clear':
-            button.view_box.value = ''
-            button.view_box.description = ''
-            button.description = 'View'
+        if button.description == BUTTON_CLEAR_STRING:
+            clear_view_box(button.view_box)
+            button.description = VIEW_FILE_STRING
         refresh_files_list(button)
         return
 
-    if button.description == 'Clear':
-        button.view_box.value = ''
-        button.description = 'View'
+    if button.description == BUTTON_CLEAR_STRING:
+        clear_view_box(button.view_box)
+        button.description = VIEW_FILE_STRING
     else:
         yaml_files_directory = button.file_selector.data_directory
         yaml_file_name = button.file_selector.value
         button.view_box.value = get_run_parameters_string(yaml_files_directory, yaml_file_name)
-        button.description = 'Clear'
+        button.description = BUTTON_CLEAR_STRING
 
 
 def get_run_parameters_string(run_files_path, yaml_file_name):
@@ -247,21 +276,30 @@ def get_run_parameters_string(run_files_path, yaml_file_name):
     return S
 
 
-def get_select_view_file_button_set(data_directory, button_name='View', file_types=USER_DATAFILE_EXTENSIONS_LIST):
+def get_select_view_file_button_set(data_directory,
+                                    button_name=VIEW_FILE_STRING,
+                                    file_types_list=USER_DATAFILE_EXTENSIONS_LIST):
     """ get a view button with file select listbox and a file view box """
     select_file_button = widgets.Button(description=button_name,
-                                           disabled=False,
-                                           button_style='',
-                                           tooltip='visualize selected file')
+                                        disabled=False,
+                                        button_style='',
+                                        tooltip='visualize selected file')
+    select_file_button.original_description = button_name
 
     select_file_button.view_box = get_view_box()
-    select_file_button.file_selector = get_dropdown_files_listbox(data_directory, file_types)
+    select_file_button.file_selector = get_dropdown_files_listbox(data_directory, file_types_list)
     select_file_button.file_selector.data_directory = data_directory
-    select_file_button.file_selector.file_types_list = file_types
-    select_file_button.on_click(visualize_selected_file)
+    select_file_button.file_selector.file_types_list = file_types_list
+
+    select_file_button.file_selector.control_button = select_file_button
+    select_file_button.file_selector.observe(visualize_changed_file, names='value')
+
+    if len(file_types_list) == 1 and '.yml' in file_types_list:
+        select_file_button.on_click(visualize_selected_yaml_file)
+    else:
+        select_file_button.on_click(visualize_selected_file)
 
     return  select_file_button
-
 
 def get_single_file_execute_button(input_data_dir, results_dir, file_selector, button_name='run'):
     """ get an execute - view button for a single input file - callback set after return """
