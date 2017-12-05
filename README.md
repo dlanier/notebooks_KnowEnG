@@ -56,3 +56,6 @@ jupyter notebook
 ### 6.  Run the **first cell** to unzip the data and copy editable notebooks to the test directory.
 
 ### 7. Open and run your choice of notebooks.
+
+### Graphical insructions for running the Kaplan Meier notebook:
+[Kaplan_Meier Readme.md](https://github.com/dlanier/notebooks_KnowEnG/blob/master/docs/Kaplan_Meier.md)
