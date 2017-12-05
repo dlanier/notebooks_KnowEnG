@@ -182,3 +182,4 @@ def display_kaplan_meier_controls():
                              time_id_listbox,
                             ]))
     show_Kaplan_Meier_execute_button(get_kaplan_meier_execute_button())
+
