@@ -21,7 +21,10 @@ and two correlation measures:
  ---
 
 ### To run the notebook on your machine follow the directions to install the Signature Analysis Pipeline:
-[Readme.md github](https://github.com/KnowEnG-Research/Signature_Analysis_Pipeline/blob/master/README.md)
+[Signature Analysis Pipeline Readme.md on github](https://github.com/KnowEnG-Research/Signature_Analysis_Pipeline/blob/master/README.md)
+
+### Then install this repository using notebooks_KnowEnG Readme.md directions.
+[notebooks_KnowEnG Readme.md on github]()
 
 ### If your browser allows auto-initialization you will see this screen.
 <p align="center">
