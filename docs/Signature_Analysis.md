@@ -21,14 +21,17 @@ and two correlation measures:
  ---
 
 ### First install the _Signature Analysis Pipeline_:
+
 [Signature Analysis Pipeline Readme.md on github](https://github.com/KnowEnG-Research/Signature_Analysis_Pipeline/blob/master/README.md)
 
 ### Then install _notebooks_KnowEnG_:
+
 [notebooks_KnowEnG Readme.md on github](https://github.com/dlanier/notebooks_KnowEnG/blob/master/README.md)
 
 ## Run  _Signature_Analysis_Pipeline_notebook.ipynb_
 
 ### If your browser allows auto-initialization you will see this screen.
+
 <p align="center">
   <img  src="../data/images/SigA_Init.png" height=220>
 </p>
@@ -40,20 +43,19 @@ and two correlation measures:
 </p>
 
 ### Click on the **View** button to see the selected run_parameters file.
+
 <p align="center">
   <img  src="../data/images/SigA_View_Yaml.png" height=220>
 </p>
-
 ### Click the **Run** button and the pipeline runs with the selected yaml file run_parameters.
 
 ### When the code is finished (depending on file size, computer speed etc), select and view the top of the output.
+
 <p align="center">
   <img  src="../data/images/SigA_View_Output.png" height=220>
 </p>
+### If you have an invalid file name or some other bad parameters Use _Kernel_ menu _Restart and Clear Output_ 
 
-### If you have an invalid file name or some other bad parameters set:
-
-### Use _Kernel_ menu _Restart and Clear Output_ to clear error messages (and all dispalyed output).
 <p align="center">
   <img  src="../data/images/restart_notebook.png" height=320>
 </p>
@@ -63,31 +65,37 @@ and two correlation measures:
  ---
 
 ### Use the _File_ menu _Open_ . 
+
 <p align="center">
   <img  src="../data/images/file_open.png" height=320>
 </p>
 
 #### Select the _user_data_ directory.
+
 <p align="center">
   <img  src="../data/images/user_data.png" height=220>
 </p>
 
 #### Click the _upload_ button to browse your computers files.
+
 <p align="center">
   <img  src="../data/images/upload_button.png" height=320>
 </p>
 
 #### Click the highlighted _upload_ button begin the upload.
+
 <p align="center">
   <img  src="../data/images/upload_button_2.png" height=120>
 </p>
 
 #### The file will appear in alphabetical order when the upload is complete.
+
 <p align="center">
   <img  src="../data/images/upload_button_3.png" height=120>
 </p>
 
 ## Rename, download or delete your result files in the _results_ directory.
+
 <p align="center">
   <img  src="../data/images/rename_download_or_delete.png" height=220>
 </p>
