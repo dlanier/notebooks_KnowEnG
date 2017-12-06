@@ -45,9 +45,12 @@ and two correlation measures:
 </p>
 
 ### Click the **Run** button and the pipeline runs with the selected yaml file run_parameters.
+
+### When the code is finished (depending on file size, computer speed etc), select and view the top of the output.
 <p align="center">
   <img  src="../data/images/SigA_View_Output.png" height=220>
 </p>
+
 
 ### Use _Kernel_ menu _Restart and Clear Output_ to clear error messages (and all dispalyed output).
 <p align="center">
