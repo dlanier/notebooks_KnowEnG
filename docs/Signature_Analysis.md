@@ -51,6 +51,7 @@ and two correlation measures:
   <img  src="../data/images/SigA_View_Output.png" height=220>
 </p>
 
+### If you have an invalid file name or some other bad parameters set:
 
 ### Use _Kernel_ menu _Restart and Clear Output_ to clear error messages (and all dispalyed output).
 <p align="center">
