@@ -30,5 +30,27 @@ and two correlation measures:
 
 ### If your browser allows auto-initialization you will see this screen.
 <p align="center">
-  <img  src="../data/images/up_and_running.png" height=220>
+  <img  src="../data/images/SigA_Init.png" height=220>
+</p>
+
+### If not, and the code is showing, use the _Cell_ menu to _Run All_
+
+<p align="center">
+  <img  src="../data/images/SigA_UnInit.png" height=220>
+</p>
+
+### Click on the **View** button to see the selected run_parameters file.
+<p align="center">
+  <img  src="../data/images/SigA_View_Yaml.png" height=220>
+</p>
+
+### Click the **Run** button and the pipeline runs with the selected yaml file run_parameters.
+<p align="center">
+  <img  src="../data/images/SigA_View_Output.png" height=220>
+</p>
+
+### Use the _Kernel_ menu _Restart and Clear Output_ to clear error messages (and all output).
+
+<p align="center">
+  <img  src="../data/images/select_restart.png" height=220>
 </p>
