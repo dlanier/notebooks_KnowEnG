@@ -47,6 +47,7 @@ and two correlation measures:
 <p align="center">
   <img  src="../data/images/SigA_View_Yaml.png" height=220>
 </p>
+
 ### Click the **Run** button and the pipeline runs with the selected yaml file run_parameters.
 
 ### When the code is finished (depending on file size, computer speed etc), select and view the top of the output.
@@ -54,6 +55,7 @@ and two correlation measures:
 <p align="center">
   <img  src="../data/images/SigA_View_Output.png" height=220>
 </p>
+
 ### If you have an invalid file name or some other bad parameters Use _Kernel_ menu _Restart and Clear Output_ 
 
 <p align="center">
