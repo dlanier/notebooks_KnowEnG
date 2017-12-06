@@ -83,7 +83,7 @@ and two correlation measures:
   <img  src="../data/images/upload_button_3.png" height=120>
 </p>
 
-## 3) Rename, download or delete your result files in the _results_ directory.
+## Rename, download or delete your result files in the _results_ directory.
 <p align="center">
   <img  src="../data/images/rename_download_or_delete.png" height=220>
 </p>
