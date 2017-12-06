@@ -17,16 +17,17 @@ and two correlation measures:
 - spearman 
 - cosine 
 
-## Install the KnowEnG _Signature_Analysis_Pipeline_notebook.ipynb_ notebook and supporting code.
+## _notebooks_KnowEnG_ Installation.
  ---
 
-### To run the notebook on your machine, first install the Signature Analysis Pipeline:
+### First install the _Signature Analysis Pipeline_:
 [Signature Analysis Pipeline Readme.md on github](https://github.com/KnowEnG-Research/Signature_Analysis_Pipeline/blob/master/README.md)
 
-### Then install this repository using notebooks_KnowEnG Readme.md directions.
+### Then install _notebooks_KnowEnG_:
 [notebooks_KnowEnG Readme.md on github](https://github.com/dlanier/notebooks_KnowEnG/blob/master/README.md)
 
-# Run  _Signature_Analysis_Pipeline_notebook.ipynb_
+## Run  _Signature_Analysis_Pipeline_notebook.ipynb_
+
 ### If your browser allows auto-initialization you will see this screen.
 <p align="center">
   <img  src="../data/images/up_and_running.png" height=220>
