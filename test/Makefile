@@ -2,7 +2,7 @@ RUN_DIR = ./run_dir
 SPREADSHEET_FILES = ../data/spreadsheets
 NETWORK_FILES = ../data/networks
 RUN_FILES = ../data/run_files
-NOTEBOOK_FILES = ../src
+NOTEBOOK_FILES = ../src/notebook
 
 RUN_DATA = $(RUN_DIR)/user_data
 RESULTS_DIR = $(RUN_DIR)/results
