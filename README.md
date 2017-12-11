@@ -6,19 +6,13 @@ There are two jupyter notebooks that one can choose from:
 | **Notebook**                                      | **Pipeline**                        | **Parameters** |
 | ------------------------------------------------ | -------------------------------------| -------------- |
 | Signature_Analysis_Pipeline_notebook             | Signature_Analysis_Pipeline          | Signature Analysis parameter files |
-| geneset_characterization_notebook                | GeneSet_Prioritization_Pipeline      | three parameter files|
-| samples_clustering_notebook                      | Samples_Clustering_Pipeline          | eight parameter files|
-| spreadsheets_transformation_notebook             | Spreadsheets_Transformation          | eight parameter files|
+| Kaplan_Meier                                     | Independent notebook                 | notebook settings|
 
 * * * 
 ## How to run these notebooks with Our data
 * * * 
-### 1. Clone the notebooks_KnowEnG Repository:
-```
- git clone https://github.com/dlanier/notebooks_KnowEnG.git
-```
  
-### 2. Install the following (Ubuntu or Linux)
+### 1. Install the following (Ubuntu or Linux)
   ```
  pip3 install pyyaml
  pip3 install xmlrunner
@@ -35,28 +29,33 @@ There are two jupyter notebooks that one can choose from:
  apt-get install -y libblas-dev liblapack-dev libatlas-base-dev gfortran
 ```
 
-### 3. Install jupyter notebook. ( http://jupyter.readthedocs.io/en/latest/install.html )
-
+### 2. Install jupyter notebook. ( http://jupyter.readthedocs.io/en/latest/install.html )
 ```
 pip3 install --upgrade pip
 
 pip3 install jupyter
 ```
 
-### 4. Start Jupyter
+### 3. Clone these KnowEnG Repositories:
+```
+ git clone https://github.com/dlanier/notebooks_KnowEnG.git
+ git clone https://github.com/KnowEnG/Signature_Analysis_Pipeline.git
+```
 
+### 4. In each Repository's test directory setup the environment.
+```
+ cd (clones location)/Signature_Analysis_Pipeline/test
+ make env_setup
+ cd ../../notebooks_KnowEnG/test/
+ make env_setup
+ cd run_dir
+```
+
+### 5. Start Jupyter
 ```
 jupyter notebook
 ```
 
-### 5 a. If the command line response offers a token then cut and paste it into your browser window.
-
-### 5 b. When the jupyter server opens your browser, open **env_setup_notebook.ipynb** in **notebooks_KnowEnG/test**
-
-### 6.  Run the **first cell** to unzip the data and copy editable notebooks to the test directory.
-
-### 7. Open and run your choice of notebooks.
-
-### Graphical insructions for running the notebooks:
+### 6. Click on a notebook to open it - see Graphical insructions for running the notebooks:
 [Kaplan_Meier](https://github.com/dlanier/notebooks_KnowEnG/blob/master/docs/Kaplan_Meier.md)
 [Signature_Analysis](https://github.com/dlanier/notebooks_KnowEnG/blob/master/docs/Signature_Analysis.md)
