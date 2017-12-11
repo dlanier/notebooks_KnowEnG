@@ -11,5 +11,4 @@ login_to_dockerhub:
 push_to_dockerhub:
 	docker push knowengdev/notebooks_knoweng:$(CURR_DATE)
 
-build_base_hub:
-	docker build --no-cache -f Dockerfile.base_image -t knowengdev/notebooks_knoweng:base_hub .
+
