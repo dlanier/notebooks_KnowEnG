@@ -8,8 +8,8 @@ method:                      net_similarity
 # --------------------------------------------------------------------
 similarity_measure:          spearman
 
-spreadsheet_name_full_path: ./user_data/Jinfeng_spreadsheet_sample_mapped.csv
-signature_name_full_path:   ./user_data/Jinfeng_spreadsheet_signature_mapped.csv
+spreadsheet_name_full_path: ./user_data/Jinfeng_spreadsheet_sample_mapped.tsv
+signature_name_full_path:   ./user_data/Jinfeng_spreadsheet_signature_mapped.tsv
 gg_network_name_full_path:  ./user_data/keg_ST90_4col.edge
 
 # -----------------------------------------------------------------------
