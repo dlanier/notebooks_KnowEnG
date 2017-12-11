@@ -11,7 +11,6 @@ See the License for the specific language governing permissions and  limitations
 import time
 import numpy as np
 
-import matplotlib.figure as figure
 import matplotlib.pyplot as plt
 
 from   IPython.display import clear_output
@@ -28,7 +27,7 @@ RESOLUTION = 100
 IM_SIZE = (12, 8)
 plt.rcParams["figure.figsize"] = IM_SIZE
 
-BLAK_IMAGE = bytes(np.zeros((IM_SIZE[0] * RESOLUTION, IM_SIZE[1] * RESOLUTION)))
+BLAK_IMAGE = bytes(np.zeros((IM_SIZE[0] * 4, IM_SIZE[1] * 4)))
 
 results_dir = USER_RESULTS_DIRECTORY
 input_data_dir = USER_DATA_DIRECTORY
@@ -87,10 +86,8 @@ def disp_kaplan_meier(phenotype_df, cluster_id_name, event_name, time_name, butt
     Clusters     = sorted(phenotype_df[cluster_id_name].unique())
     num_clusters = len(Clusters)
 
+    plt.clf()
     ax     = plt.subplot(111)
-    
-    ytitle = event_name
-    xtitle = time_name
 
     kmf = KaplanMeierFitter()
     for cluster in Clusters:
