@@ -1,11 +1,11 @@
 # Developing tools for KnowEnG's Pipelines 
 This is the Knowledge Engine for Genomics (KnowEnG), an NIH BD2K Center of Excellence, Pipelines Notebooks.
 
-There are four jupyter notebooks that one can choose from:
+There are two jupyter notebooks that one can choose from:
 
 | **Notebook**                                      | **Pipeline**                        | **Parameters** |
 | ------------------------------------------------ | -------------------------------------| -------------- |
-| gene_prioritization_notebook                     | Gene_Prioritization_Pipeline         | eight parameter files |
+| Signature_Analysis_Pipeline_notebook             | Signature_Analysis_Pipeline          | Signature Analysis parameter files |
 | geneset_characterization_notebook                | GeneSet_Prioritization_Pipeline      | three parameter files|
 | samples_clustering_notebook                      | Samples_Clustering_Pipeline          | eight parameter files|
 | spreadsheets_transformation_notebook             | Spreadsheets_Transformation          | eight parameter files|
@@ -13,7 +13,7 @@ There are four jupyter notebooks that one can choose from:
 * * * 
 ## How to run these notebooks with Our data
 * * * 
-### 1. Clone the Samples_Clustering_Pipeline Repo
+### 1. Clone the notebooks_KnowEnG Repository:
 ```
  git clone https://github.com/dlanier/notebooks_KnowEnG.git
 ```
@@ -57,5 +57,6 @@ jupyter notebook
 
 ### 7. Open and run your choice of notebooks.
 
-### Graphical insructions for running the Kaplan Meier notebook:
-[Kaplan_Meier Readme.md](https://github.com/dlanier/notebooks_KnowEnG/blob/master/docs/Kaplan_Meier.md)
+### Graphical insructions for running the notebooks:
+[Kaplan_Meier](https://github.com/dlanier/notebooks_KnowEnG/blob/master/docs/Kaplan_Meier.md)
+[Signature_Analysis](https://github.com/dlanier/notebooks_KnowEnG/blob/master/docs/Signature_Analysis.md)
