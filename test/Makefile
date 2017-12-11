@@ -1,24 +1,28 @@
-# SCRIPT = ../src/spreadsheets_transformation_pipelines.py
 RUN_DIR = ./run_dir
+SPREADSHEET_FILES = ../data/spreadsheets
+NETWORK_FILES = ../data/networks
 RUN_FILES = ../data/run_files
-NB_FILES = ../data/notebooks
+NOTEBOOK_FILES = ../src
+
+RUN_DATA = $(RUN_DIR)/user_data
 RESULTS_DIR = $(RUN_DIR)/results
-INPUT_DATA_DIR = ../data
-UNIT_TEST_TEMP_DIR = ./unit/tmp
 
 RMR = rm -rf
 MKDIR_P = mkdir -p
 
 # ----------------------------------------------------------------
-# Benchmarks setup Section                                       -
+# notebooks setup Section                                       -
 # ----------------------------------------------------------------
-env_setup: create_run_dir copy_run_files
+env_setup: create_run_dir copy_data_files  copy_run_files
 
 create_run_dir:
-	$(MKDIR_P) $(RESULTS_DIR) 
+	$(MKDIR_P) $(RESULTS_DIR); $(MKDIR_P) $(RUN_DATA)
+
+copy_data_files:
+	cp $(SPREADSHEET_FILES)/* $(RUN_DATA); cp $(NETWORK_FILES)/* $(RUN_DATA); cp $(RUN_FILES)/* $(RUN_DATA)
 
 copy_run_files:
-	cp $(RUN_FILES)/*.yml $(RUN_DIR); cp $(NB_FILES)/*.ipynb .
+	cp $(NOTEBOOK_FILES)/*.ipynb $(RUN_DIR)
 
 clean_dir_recursively:
 	$(RMR) $(RUN_DIR)
