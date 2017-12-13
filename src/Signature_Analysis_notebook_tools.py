@@ -16,14 +16,14 @@ import sys
 # # from IPython.display import display, HTML
 # import ipywidgets as widgets
 
-sys.path.insert(1, './')
+sys.path.insert(1, '../notebooks_KnowEnG/src')
 from layout_notebooks import *
 
 SIG_A_TYPES_LIST = ['.yml']
 SIG_A_OUTPUT_TYPES_LIST = ['.tsv','.df']
 
 run_directory = os.path.abspath('user_data')
-main_file_path = os.path.abspath('../../../Signature_Analysis_Pipeline/src')
+main_file_path = os.path.abspath('../Signature_Analysis_Pipeline/src')
 main_file = os.path.join(main_file_path,'gene_signature.py')
 results_dir = os.path.abspath('results')
 
