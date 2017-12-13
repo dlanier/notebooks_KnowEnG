@@ -8,6 +8,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 .Python
+results/
+user_data/
 env/
 develop-eggs/
 dist/
