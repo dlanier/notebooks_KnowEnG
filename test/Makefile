@@ -22,7 +22,7 @@ copy_data_files:
 	cp $(SPREADSHEET_FILES)/* $(RUN_DATA); cp $(NETWORK_FILES)/* $(RUN_DATA); cp $(RUN_FILES)/* $(RUN_DATA)
 
 copy_run_files:
-	cp $(NOTEBOOK_FILES)/*.ipynb $(RUN_DIR)
+	cp $(NOTEBOOK_FILES)/*.ipynb $(RUN_DIR); cp $(RUN_FILES)/* $(RUN_DIR)
 
 clean_dir_recursively:
 	$(RMR) $(RUN_DIR)
