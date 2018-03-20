@@ -5,13 +5,27 @@ from IPython.display import display, HTML
 
 from knpackage import toolbox as kn
 
-# local environment definitions:
-pipelines_root_directory = os.path.abspath('/pipelines')
-notebooks_home_directory = 'notebooks/test' 
-run_directory = 'notebooks/test/run_dir'
-# tmp_directory need not exist - just in user owned place
-notebook_results_directory = os.path.abspath('notebooks/test/run_dir/results')
-tmp_directory = os.path.join(notebook_results_directory, 'tmp')
+def get_user_path_dict(pipelines_root_directory='/pipelines'):
+    """ default path setup to accomodate server or local running  """
+    user_home=os.path.expanduser('~')
+    user_path_dict = {}
+
+    user_path_dict['pipelines_root_directory'] = os.path.abspath(pipelines_root_directory)
+
+    # KnowEnG_notebooks_directory
+    user_path_dict['knoweng_notebooks_directory'] = os.path.abspath(os.path.join(pipelines_root_directory, 'notebooks_KnowEnG'))
+
+    user_path_dict['user_home'] = os.path.expanduser('~')
+    user_path_dict['notebooks_home_directory'] = os.path.join(user_home, 'notebooks/test')
+    user_path_dict['run_directory'] = os.path.join(user_home, 'notebooks/test/run_dir')
+    user_path_dict['notebook_results_directory'] = os.path.join(user_home, 'notebooks/test/run_dir/results')
+
+    # tmp_directory need not exist - just in user owned place
+    user_path_dict['tmp_directory'] = os.path.join(user_path_dict['notebook_results_directory'], 'tmp')
+    user_path_dict['skip_dirs']=['notebooks_KnowEnG']
+
+    return user_path_dict
+
 
 def run_dir_setup(notebook_location):
     notebook_results_directory = os.path.join(os.path.abspath(notebook_location),'test/run_dir/results')
@@ -20,13 +34,16 @@ def run_dir_setup(notebook_location):
 
 
 def display_run_parameters(run_parameters):
+    """ notebook convenience """
     if isinstance(run_parameters, dict):
         for k, v in run_parameters.items():
             print('%30s : %s'%(k,str(v)))
     else:
         print('\n\t\trun_parameters are zippo\n')
 
+
 def view_spreadsheet_file_head(full_file_name):
+    """ notebook convenience """
     if os.path.isfile(full_file_name):
         sp_df = kn.get_spreadsheet_df(full_file_name)
         deNada, f_name = os.path.split(full_file_name)
@@ -35,11 +52,12 @@ def view_spreadsheet_file_head(full_file_name):
     else:
         print('file not found on local path')
 
-def copy_yaml_with_path_edit(pipeline_directory_full_path, run_directory=run_directory, results_directory=notebook_results_directory):
+
+def copy_yaml_with_path_edit(pipeline_directory_full_path, run_directory, results_directory):
+    """ copy and convert the yaml file relative paths to work in users run_directory """
     yaml_files_source_directory = os.path.join(pipeline_directory_full_path, 'data/run_files')
     if not os.path.isdir(yaml_files_source_directory):
-        # quit if this pipeline has no yaml files
-        # print(yaml_files_source_directory,'\n\t\t  DNE \n')
+        # do nothing if this pipeline has no yaml files
         return
 
     yaml_dir_list = os.listdir(yaml_files_source_directory)
@@ -73,10 +91,10 @@ def copy_yaml_with_path_edit(pipeline_directory_full_path, run_directory=run_dir
                 pass
 
 
-def copy_pipeline_yaml_files_to_user(pipelines_root_directory,
-                                     run_dir=run_directory,
-                                     results_dir=notebook_results_directory,
-                                     skip_dirs=['notebooks_KnowEnG']):
+def copy_pipeline_yaml_files_to_user(pipelines_root_directory, skip_dirs):
+    """ copy the all yaml files and modify the pathnames """
+    user_path_dict = get_user_path_dict(pipelines_root_directory)
+
     pipeline_directory_names = os.listdir(pipelines_root_directory)
     for maybe_dir in pipeline_directory_names:
         if maybe_dir in skip_dirs:
@@ -86,28 +104,24 @@ def copy_pipeline_yaml_files_to_user(pipelines_root_directory,
             pipeline_directory_full_path = os.path.join(pipelines_root_directory, maybe_dir)
             if os.path.isdir(pipeline_directory_full_path) == True:
                 copy_yaml_with_path_edit(pipeline_directory_full_path,
-                                         run_directory=run_dir,
-                                         results_directory=results_dir)
+                                         run_directory=user_path_dict['run_directory'],
+                                         results_directory=user_path_dict['notebook_results_directory'])
+
 
 def copy_notebooks_to_user(notebooks_from_directory, notebooks_to_directory):
+    """ simple copy notebooks called from import_knoweng_pipeline_notebooks """
     for maybe_file in os.listdir(notebooks_from_directory):
         full_file_name = os.path.join(notebooks_from_directory, maybe_file)
         if os.path.isfile(full_file_name) and maybe_file[-6:] == '.ipynb':
             os.system('cp ' + full_file_name + ' ' + os.path.abspath(notebooks_to_directory))
 
-            
 
-def import_knoweng_pipeline_notebooks():
-#     user_base_dir = os.getcwd()
+def import_knoweng_pipeline_notebooks(pipelines_root_directory='/pipelines'):
+    """ import the notebooks from notebooks_KnowEnG volume on server
+    """
+    user_path_dict = get_user_path_dict(pipelines_root_directory)
+    copy_pipeline_yaml_files_to_user(pipelines_root_directory=user_path_dict['pipelines_root_directory'],
+                                     skip_dirs=user_path_dict['skip_dirs'])
 
-    copy_pipeline_yaml_files_to_user(pipelines_root_directory=pipelines_root_directory, 
-                                    run_dir=run_directory, 
-                                    results_dir=notebook_results_directory, 
-                                    skip_dirs=['notebooks_KnowEnG'])
-
-    KnowEnG_notebooks_directory = os.path.join(pipelines_root_directory, 'notebooks_KnowEnG/data/notebooks')
-    copy_notebooks_to_user(notebooks_from_directory=KnowEnG_notebooks_directory, 
-                           notebooks_to_directory=notebooks_home_directory)
-
-    print('Hallelujah!')
-    
+    copy_notebooks_to_user(notebooks_from_directory=user_path_dict['knoweng_notebooks_directory'],
+                           notebooks_to_directory=user_path_dict['notebooks_home_directory'])
