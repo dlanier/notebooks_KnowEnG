@@ -1,6 +1,8 @@
 # Check and create the local directory struct            RUN ONCE
 import os
 import yaml
+from IPython.display import display, HTML
+
 from knpackage import toolbox as kn
 
 # local environment definitions:
@@ -11,9 +13,11 @@ run_directory = 'notebooks/test/run_dir'
 notebook_results_directory = os.path.abspath('notebooks/test/run_dir/results')
 tmp_directory = os.path.join(notebook_results_directory, 'tmp')
 
-def dir_setup():
+def run_dir_setup(notebook_location):
+    notebook_results_directory = os.path.join(os.path.abspath(notebook_location),'test/run_dir/results')
     if not os.path.isdir(notebook_results_directory):
         os.makedirs(notebook_results_directory, exist_ok=True)
+
 
 def display_run_parameters(run_parameters):
     if isinstance(run_parameters, dict):
@@ -21,12 +25,21 @@ def display_run_parameters(run_parameters):
             print('%30s : %s'%(k,str(v)))
     else:
         print('\n\t\trun_parameters are zippo\n')
-        
-def copy_yaml_with_path_edit(pipeline_directory_full_path, run_directory):
+
+def view_spreadsheet_file_head(full_file_name):
+    if os.path.isfile(full_file_name):
+        sp_df = kn.get_spreadsheet_df(full_file_name)
+        deNada, f_name = os.path.split(full_file_name)
+        print(f_name , ' size:', sp_df.shape)
+        display(sp_df.head(10))
+    else:
+        print('file not found on local path')
+
+def copy_yaml_with_path_edit(pipeline_directory_full_path, run_directory=run_directory, results_directory=notebook_results_directory):
     yaml_files_source_directory = os.path.join(pipeline_directory_full_path, 'data/run_files')
     if not os.path.isdir(yaml_files_source_directory):
         # quit if this pipeline has no yaml files
-        print(yaml_files_source_directory,'\n\t\t  DNE \n')
+        # print(yaml_files_source_directory,'\n\t\t  DNE \n')
         return
 
     yaml_dir_list = os.listdir(yaml_files_source_directory)
@@ -39,9 +52,9 @@ def copy_yaml_with_path_edit(pipeline_directory_full_path, run_directory):
             run_parameters = kn.get_run_parameters(yaml_files_source_directory, maybe_yaml)
             for k, v in run_parameters.items():
                 if k == 'results_directory':
-                    run_parameters['results_directory'] = notebook_results_directory
+                    run_parameters['results_directory'] = results_directory
                 elif k == 'tmp_directory':
-                    run_parameters['tmp_directory'] = os.path.join(notebook_results_directory, 'tmp')
+                    run_parameters['tmp_directory'] = os.path.join(results_directory, 'tmp')
                 elif k == 'run_directory':
                     run_parameters['run_directory'] = run_directory
                 elif isinstance(v, str) and len(v) > 1 and v[0:2] == './':
@@ -50,7 +63,7 @@ def copy_yaml_with_path_edit(pipeline_directory_full_path, run_directory):
                 elif isinstance(v, str) and len(v) > 1 and v[0:3] == '../':
                     path_string = v[3:]
                     run_parameters[k] = os.path.join(pipeline_directory_full_path, path_string)
-                    
+
             full_file_name = os.path.join(run_directory, maybe_yaml)
             try:
                 with open(full_file_name, 'w') as fh:
@@ -58,7 +71,8 @@ def copy_yaml_with_path_edit(pipeline_directory_full_path, run_directory):
             except Exception:
                 print(full_file_name, '\n\t Exception Unknown')
                 pass
-            
+
+
 def copy_pipeline_yaml_files_to_user(pipelines_root_directory,
                                      run_dir=run_directory,
                                      results_dir=notebook_results_directory,
@@ -71,7 +85,7 @@ def copy_pipeline_yaml_files_to_user(pipelines_root_directory,
         else:
             pipeline_directory_full_path = os.path.join(pipelines_root_directory, maybe_dir)
             if os.path.isdir(pipeline_directory_full_path) == True:
-                copy_yaml_with_path_edit(pipeline_directory_full_path, 
+                copy_yaml_with_path_edit(pipeline_directory_full_path,
                                          run_directory=run_dir,
                                          results_directory=results_dir)
 
