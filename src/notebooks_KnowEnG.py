@@ -1,6 +1,5 @@
 # Check and create the local directory struct            RUN ONCE
 import os
-import sys
 import yaml
 from knpackage import toolbox as kn
 
@@ -12,8 +11,9 @@ run_directory = 'notebooks/test/run_dir'
 notebook_results_directory = os.path.abspath('notebooks/test/run_dir/results')
 tmp_directory = os.path.join(notebook_results_directory, 'tmp')
 
-if not os.path.isdir(notebook_results_directory):
-    os.makedirs(notebook_results_directory, exist_ok=True)
+def dir_setup():
+    if not os.path.isdir(notebook_results_directory):
+        os.makedirs(notebook_results_directory, exist_ok=True)
 
 def display_run_parameters(run_parameters):
     if isinstance(run_parameters, dict):
@@ -22,20 +22,18 @@ def display_run_parameters(run_parameters):
     else:
         print('\n\t\trun_parameters are zippo\n')
         
-def copy_yaml_with_path_edit(pipeline_directory_full_path, run_directory, results_directory):
+def copy_yaml_with_path_edit(pipeline_directory_full_path, run_directory):
     yaml_files_source_directory = os.path.join(pipeline_directory_full_path, 'data/run_files')
     if not os.path.isdir(yaml_files_source_directory):
         # quit if this pipeline has no yaml files
         print(yaml_files_source_directory,'\n\t\t  DNE \n')
         return
-    
-    tmp_directory = os.path.join(results_directory, 'tmp')
+
     yaml_dir_list = os.listdir(yaml_files_source_directory)
     if len(yaml_dir_list) < 1:
         print('No files found in :\n\t', yaml_files_source_directory)
         return
-    
-    run_parameters_dict_list = []
+
     for maybe_yaml in yaml_dir_list:
         if len(maybe_yaml) > 4 and maybe_yaml[-4:] == '.yml':
             run_parameters = kn.get_run_parameters(yaml_files_source_directory, maybe_yaml)
@@ -61,7 +59,10 @@ def copy_yaml_with_path_edit(pipeline_directory_full_path, run_directory, result
                 print(full_file_name, '\n\t Exception Unknown')
                 pass
             
-def copy_pipeline_yaml_files_to_user(pipelines_root_directory, run_dir, results_dir, skip_dirs=['notebooks_KnowEnG']):
+def copy_pipeline_yaml_files_to_user(pipelines_root_directory,
+                                     run_dir=run_directory,
+                                     results_dir=notebook_results_directory,
+                                     skip_dirs=['notebooks_KnowEnG']):
     pipeline_directory_names = os.listdir(pipelines_root_directory)
     for maybe_dir in pipeline_directory_names:
         if maybe_dir in skip_dirs:
@@ -71,8 +72,8 @@ def copy_pipeline_yaml_files_to_user(pipelines_root_directory, run_dir, results_
             pipeline_directory_full_path = os.path.join(pipelines_root_directory, maybe_dir)
             if os.path.isdir(pipeline_directory_full_path) == True:
                 copy_yaml_with_path_edit(pipeline_directory_full_path, 
-                                         run_directory=run_directory, 
-                                         results_directory=notebook_results_directory)
+                                         run_directory=run_dir,
+                                         results_directory=results_dir)
 
 def copy_notebooks_to_user(notebooks_from_directory, notebooks_to_directory):
     for maybe_file in os.listdir(notebooks_from_directory):
