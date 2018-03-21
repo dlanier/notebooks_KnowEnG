@@ -1,24 +1,23 @@
-# Check and create the local directory struct            RUN ONCE
 import os
 import yaml
 from IPython.display import display, HTML
 
 from knpackage import toolbox as kn
 
-def get_user_path_dict(pipelines_root_directory='/pipelines'):
+def get_user_path_dict(pipelines_root_directory='/pipelines', user_notebooks_path='knoweng_pipelines'):
     """ default path setup to accomodate server or local running  """
-    user_home=os.path.expanduser('~')
+    user_home = os.path.expanduser('~')
     user_path_dict = {}
 
     user_path_dict['pipelines_root_directory'] = os.path.abspath(pipelines_root_directory)
 
     # KnowEnG_notebooks_directory
-    user_path_dict['knoweng_notebooks_directory'] = os.path.abspath(os.path.join(pipelines_root_directory, 'notebooks_KnowEnG'))
+    user_path_dict['notebooks_KnowEnG_directory'] = os.path.abspath(os.path.join(pipelines_root_directory, 'notebooks_KnowEnG'))
 
-    user_path_dict['user_home'] = os.path.expanduser('~')
-    user_path_dict['notebooks_home_directory'] = os.path.join(user_home, 'notebooks/test')
-    user_path_dict['run_directory'] = os.path.join(user_home, 'notebooks/test/run_dir')
-    user_path_dict['notebook_results_directory'] = os.path.join(user_home, 'notebooks/test/run_dir/results')
+    user_path_dict['user_home'] = user_home
+    user_path_dict['notebooks_home_directory'] = os.path.join(user_home, user_notebooks_path)
+    user_path_dict['run_directory'] = os.path.join(user_path_dict['notebooks_home_directory'], 'test/run_dir')
+    user_path_dict['notebook_results_directory'] = os.path.join(user_path_dict['notebooks_home_directory'], 'test/run_dir/results')
 
     # tmp_directory need not exist - just in user owned place
     user_path_dict['tmp_directory'] = os.path.join(user_path_dict['notebook_results_directory'], 'tmp')
@@ -27,7 +26,15 @@ def get_user_path_dict(pipelines_root_directory='/pipelines'):
     return user_path_dict
 
 
-def run_dir_setup(notebook_location):
+def run_dir_setup(user_notebooks_path='knoweng_pipelines', pipelines_root_directory='/pipelines'):
+    """ make notebook default directories in user home """
+    user_path_dict = get_user_path_dict(pipelines_root_directory, user_notebooks_path)
+    notebook_results_directory = user_path_dict['notebook_results_directory']
+    if not os.path.isdir(notebook_results_directory):
+        os.makedirs(notebook_results_directory, exist_ok=True)
+
+
+def setup_test_dir(notebook_location):
     notebook_results_directory = os.path.join(os.path.abspath(notebook_location),'test/run_dir/results')
     if not os.path.isdir(notebook_results_directory):
         os.makedirs(notebook_results_directory, exist_ok=True)
@@ -120,8 +127,9 @@ def import_knoweng_pipeline_notebooks(pipelines_root_directory='/pipelines'):
     """ import the notebooks from notebooks_KnowEnG volume on server
     """
     user_path_dict = get_user_path_dict(pipelines_root_directory)
-    copy_pipeline_yaml_files_to_user(pipelines_root_directory=user_path_dict['pipelines_root_directory'],
-                                     skip_dirs=user_path_dict['skip_dirs'])
+    #copy_pipeline_yaml_files_to_user(pipelines_root_directory=user_path_dict['pipelines_root_directory'],
+    #                                 skip_dirs=user_path_dict['skip_dirs'])
 
-    copy_notebooks_to_user(notebooks_from_directory=user_path_dict['knoweng_notebooks_directory'],
+    notebooks_from_directory=os.path.join(user_path_dict['notebooks_KnowEnG_directory'], 'data/notebooks')
+    copy_notebooks_to_user(notebooks_from_directory=notebooks_from_directory,
                            notebooks_to_directory=user_path_dict['notebooks_home_directory'])
