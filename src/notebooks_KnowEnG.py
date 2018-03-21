@@ -133,3 +133,47 @@ def import_knoweng_pipeline_notebooks(pipelines_root_directory='/pipelines'):
     notebooks_from_directory=os.path.join(user_path_dict['notebooks_KnowEnG_directory'], 'data/notebooks')
     copy_notebooks_to_user(notebooks_from_directory=notebooks_from_directory,
                            notebooks_to_directory=user_path_dict['notebooks_home_directory'])
+
+
+def get_file_types_list(directory_name, file_ext_list):
+    """  """
+    max_chars = max([len(file_ext_list[k]) for k in range(0, len(file_ext_list))])
+    file_listing = os.listdir(directory_name)
+    data_files = {}
+    for f_name in file_listing:
+        full_f_name = os.path.join(directory_name, f_name)
+        if os.path.isfile(full_f_name) and not f_name[0] == '.' and not f_name[0] == '_':
+            data_files[f_name] = full_f_name
+
+    return data_files
+
+
+def get_pipeline_data_list(pipeline_dir, path_dict=None):
+    data_files = {}
+    if path_dict == None:
+        most_ext_list = ['gz', 'df', 'txt', 'tsv', 'csv']
+        path_dict = {'data/run_files': ['yml'],
+                     'data/spreadsheets': most_ext_list,
+                     'data/networks': most_ext_list,
+                     'src': ['py', 'ipy', 'ipynb']}
+
+    for path_ext, file_ext in path_dict.items():
+        maybe_path = os.path.join(pipeline_dir, path_ext)
+        if os.path.isdir(maybe_path):
+            no_matta, file_description = os.path.split(path_ext)
+            data_files[file_description] = get_file_types_list(maybe_path, file_ext)
+
+    return data_files
+
+
+def get_pipelines_dictionary(all_pipelines_dir):
+    maybe_dirs = os.listdir(all_pipelines_dir)
+    pipelines_dictionary = {}
+    for m_dir in maybe_dirs:
+        full_m_dir = os.path.join(all_pipelines_dir, m_dir)
+        if os.path.isdir(full_m_dir) and not full_m_dir[0] == '.' and not full_m_dir[0] == '_':
+            maybe_dict = get_pipeline_data_list(full_m_dir)
+            if len(maybe_dict.keys()) > 0:
+                pipelines_dictionary[m_dir] = maybe_dict
+
+    return pipelines_dictionary
